@@ -93,4 +93,24 @@ class Trie {
         }
         return true;
     }
+
+    public void delete(String word) {
+        return delete(root, word, index);
+    }
+
+    private boolean delete(TrieNode cur, String word, int index) {
+        if (index == word.length()) {
+            if (!cur.isEnd) return false;
+            cur.isEnd = false;
+            return cur.children.size() == 0;
+        }
+        char c = word.charAt(index);
+        if (!cur.children.containsKey(c)) return false;
+        boolean isDelete = delete(cur.children.get(c), word, index + 1);
+        if (isDelete) {
+            cur.children.remove(c);
+            return cur.children.size() == 0;
+        }
+        return false;
+    }
 }
